@@ -1,0 +1,134 @@
+/* Morpho brand guideline palette — used exactly */
+:root{
+  --black:#000000; --char:#3c3c3c; --ash:#7a7a7a; --mist:#e5e5e5; --white:#ffffff; --navy:#000080;
+  --rule:rgba(229,229,229,.13);
+  --pad:clamp(20px,5.2vw,52px);
+  --display:"Oswald","Arial Narrow","Roboto Condensed",Arial,sans-serif;
+  --arabic:"Noto Kufi Arabic","Geeza Pro","Segoe UI",Tahoma,sans-serif;
+  --mark:url("./assets/morph/mark.png");
+  color-scheme:dark;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+/* The brand is black in every viewer theme */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--black:#000000;--char:#3c3c3c;--ash:#7a7a7a;--mist:#e5e5e5;--white:#ffffff;--navy:#000080;--rule:rgba(229,229,229,.13)}
+}
+:root[data-theme="dark"]{--black:#000000;--char:#3c3c3c;--ash:#7a7a7a;--mist:#e5e5e5;--white:#ffffff;--navy:#000080;--rule:rgba(229,229,229,.13)}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--black)}
+body{margin:0;min-height:100%;background:var(--black);color:var(--mist);font-family:var(--display);
+  font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--white);outline-offset:3px}
+
+.mk{display:inline-block;width:16px;height:13px;flex:none;background:currentColor;
+  -webkit-mask:var(--mark) center/contain no-repeat;mask:var(--mark) center/contain no-repeat}
+
+#stage{position:fixed;inset:0;z-index:0;pointer-events:none}
+#stage canvas{display:block;width:100%;height:100%}
+
+.page{position:relative;z-index:2}
+
+/* ---------- ticker ---------- */
+.ticker{position:relative;z-index:3;height:34px;display:flex;align-items:center;overflow:hidden;
+  border-bottom:1px solid var(--rule);background:linear-gradient(180deg,rgba(0,0,0,.9),rgba(0,0,0,.4))}
+.ticker .run{display:flex;width:max-content;animation:run 42s linear infinite}
+.ticker span{display:flex;align-items:center;gap:22px;padding-right:22px;white-space:nowrap;
+  font-weight:500;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash)}
+.ticker span[lang="ar"]{font-family:var(--arabic);letter-spacing:0;font-size:13px;font-weight:400}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* ---------- hero: the metamorphosis lives here ---------- */
+.hero{position:relative;height:clamp(380px,62svh,660px);touch-action:pan-y;cursor:grab;
+  -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.hero.drag{cursor:grabbing}
+.caption{position:absolute;left:var(--pad);bottom:clamp(16px,3svh,28px);margin:0;pointer-events:none;
+  transition:opacity .24s ease,transform .24s ease}
+.caption.out{opacity:0;transform:translateY(-6px)}
+.cap-n{display:block;font-size:13px;font-weight:400;color:var(--ash);margin-bottom:5px;font-variant-numeric:tabular-nums}
+.cap-w{display:block;font-weight:700;font-size:clamp(30px,8.4vw,46px);line-height:.95;color:var(--white);text-transform:uppercase}
+.cap-d{display:block;font-size:14px;color:var(--ash);margin-top:7px;max-width:30ch}
+.tools{position:absolute;right:var(--pad);bottom:clamp(16px,3svh,28px);display:flex;flex-direction:column;
+  align-items:flex-end;gap:8px;opacity:0;transform:translateY(6px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
+.tools.on{opacity:1;transform:none}
+.tools.on .replay{pointer-events:auto}
+.hint{margin:0;font-size:13px;color:var(--ash);text-align:right}
+.replay{font:500 13px/1 var(--display);color:var(--mist);background:rgba(0,0,0,.55);border:1px solid var(--rule);
+  padding:10px 14px;min-height:40px;cursor:pointer;display:flex;align-items:center;gap:9px;transition:background .2s,color .2s}
+.replay:hover{background:var(--mist);color:var(--black)}
+.fallback{display:none}
+.nogl .fallback{display:block;position:absolute;inset:0;background:url("./assets/morph/butterfly.png") center 44%/min(72%,440px) no-repeat}
+
+/* ---------- panel ---------- */
+.panel{position:relative;padding:6px var(--pad) 0;
+  background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.84) 120px,rgba(0,0,0,.95))}
+.panel{animation:reveal 1s cubic-bezier(.7,0,.2,1) .65s both}
+@keyframes reveal{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+
+.wm{margin:0;font-weight:700;font-size:clamp(72px,21vw,148px);line-height:.8;letter-spacing:-.015em;
+  color:var(--white);text-transform:uppercase;white-space:nowrap}
+.wm span{display:inline-block;text-align:center}
+.wm .o{color:transparent;-webkit-text-stroke:1.5px rgba(229,229,229,.62)}
+.sub{display:flex;align-items:baseline;gap:14px;margin:14px 0 0;font-size:16px;color:var(--ash)}
+.sub [lang="ar"]{font-family:var(--arabic);font-size:17px;color:var(--mist)}
+
+/* the one loud element: Drop 02 */
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+.drop{position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 16px;margin:26px 0 10px;
+  padding:20px 20px 18px;text-decoration:none;color:var(--mist);isolation:isolate;
+  background:radial-gradient(120% 140% at 0% 0%,rgba(229,229,229,.08),rgba(0,0,0,.62) 62%);
+  transition:transform .3s cubic-bezier(.2,.9,.2,1)}
+.drop::before{content:"";position:absolute;inset:0;padding:1px;pointer-events:none;
+  background:conic-gradient(from var(--ang),rgba(229,229,229,.14) 0deg,rgba(255,255,255,.95) 34deg,rgba(229,229,229,.14) 80deg 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask-composite:exclude;animation:orbit 5s linear infinite}
+@keyframes orbit{to{--ang:360deg}}
+.drop:hover{transform:translateY(-2px)}
+.live{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-size:14px;font-weight:400;color:var(--mist)}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--white);animation:ping 2.2s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,255,255,.55)}70%{box-shadow:0 0 0 9px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+.dt{font-weight:700;font-size:clamp(42px,11vw,60px);line-height:.92;color:var(--white);text-transform:uppercase;margin-top:10px}
+.dar{align-self:end;font-family:var(--arabic);font-size:15px;color:var(--ash);white-space:nowrap;padding-bottom:6px}
+.dd{grid-column:1/-1;font-size:15px;line-height:1.45;color:var(--ash);margin-top:6px;max-width:42ch}
+.dgo{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:14px;
+  border-top:1px solid var(--rule);font-weight:600;font-size:18px;color:var(--white)}
+.dgo .mk{width:24px;height:19px}
+.drop:hover .dgo .mk,.drop:focus-visible .dgo .mk{animation:flap .2s ease-in-out infinite alternate}
+@keyframes flap{to{transform:scaleX(.3)}}
+
+.rows{border-top:1px solid var(--rule)}
+.row{position:relative;display:grid;grid-template-columns:24px 1fr auto;align-items:center;gap:16px;
+  padding:16px 10px;border-bottom:1px solid var(--rule);text-decoration:none;color:var(--mist);isolation:isolate;overflow:hidden;
+  transition:color .2s ease}
+.row::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--mist);transform:scaleX(0);
+  transform-origin:left;transition:transform .3s cubic-bezier(.7,0,.2,1)}
+.row:hover,.row:focus-visible,.row:active{color:var(--black)}
+.row:hover::before,.row:focus-visible::before,.row:active::before{transform:scaleX(1)}
+.row .mk{width:20px;height:16px;opacity:.75}
+.row:hover .mk,.row:focus-visible .mk{opacity:1;animation:flap .2s ease-in-out infinite alternate}
+.rt{display:block;font-weight:600;font-size:clamp(20px,5.4vw,24px);line-height:1.1}
+.rm{display:block;font-size:14px;color:var(--ash);margin-top:3px;transition:color .2s ease}
+.rar{font-family:var(--arabic);font-size:13px;color:var(--ash);white-space:nowrap;transition:color .2s ease}
+.row:hover .rm,.row:focus-visible .rm,.row:active .rm,.row:hover .rar,.row:focus-visible .rar,.row:active .rar{color:var(--char)}
+
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  padding:22px 0 calc(26px + env(safe-area-inset-bottom,0px));font-size:13px;color:var(--ash)}
+
+@media (min-width:960px){
+  .page{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(420px,.88fr)}
+  .ticker{grid-column:1/-1}
+  .hero{position:sticky;top:0;height:calc(100svh - 34px)}
+  .panel{display:flex;flex-direction:column;justify-content:center;min-height:calc(100svh - 34px);
+    padding:36px clamp(32px,4vw,64px) 0 8px;
+    background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.7) 24%,rgba(0,0,0,.88))}
+  .wm{font-size:clamp(96px,9.4vw,150px)}
+  footer{margin-top:auto}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .ticker .run,.drop::before,.live i{animation:none}
+  .panel{animation:none}
+}
